@@ -5,6 +5,7 @@
       <nuxt/>
     </main>
     <my-footer/>
+    <portal-target name="modal" />
   </div>
 </template>
 

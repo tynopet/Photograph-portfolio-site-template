@@ -20,6 +20,10 @@ module.exports = {
   */
   loading: { color: '#3B8070' },
   build: {
-    vendor: ['axios', 'dompurify']
-  }
+    vendor: ['axios', 'portal-vue']
+  },
+  plugins: ['~plugins/portal-vue']
+  // router: {
+  //   middleware: 'auth'
+  // }
 }

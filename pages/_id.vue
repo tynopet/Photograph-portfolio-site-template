@@ -9,6 +9,9 @@ import axios from 'axios'
 import Image from '~/components/Image'
 
 export default {
+  validate ({ params }) {
+    return /^\d+$/.test(params.id)
+  },
   components: {
     'album-image': Image
   },
