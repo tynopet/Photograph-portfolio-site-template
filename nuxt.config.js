@@ -20,7 +20,7 @@ module.exports = {
   */
   loading: { color: '#3B8070' },
   build: {
-    vendor: ['axios', 'portal-vue']
+    vendor: ['portal-vue']
   },
   plugins: ['~plugins/portal-vue']
   // router: {

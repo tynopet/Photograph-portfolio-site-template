@@ -1,19 +1,28 @@
 <template>
   <section class="admin">
     <form class="login-form" @submit.prevent="handleSubmit">
-      <input class="input" type="email" placeholder="Email" v-model="email">
-      <input class="input" type="password" placeholder="Пароль" v-model="password">
-      <span class="error" v-show="error">{{ errorMessage }}</span>
-      <button class="gay-btn">Log In</button>
+      <sexy-input type="email" placeholder="Email" v-model="email" />
+      <sexy-input type="password" placeholder="Пароль" v-model="password" />
+      <sexy-error v-show="error">{{ errorMessage }}</sexy-error>
+      <sexy-button>Log In</sexy-button>
     </form>
   </section>
 </template>
 
 <script>
-import axios from 'axios'
 import qs from 'qs'
+import { axios } from '~/hellpers'
+import SexyButton from '~/components/Button'
+import SexyInput from '~/components/Input'
+import SexyError from '~/components/Error'
 
 export default {
+  middleware: 'auth',
+  components: {
+    SexyButton,
+    SexyInput,
+    SexyError
+  },
   head: {
     title: 'Вход в админку'
   },
@@ -24,19 +33,6 @@ export default {
       error: null
     }
   },
-  // async mounted () {
-  //   const token = localStorage.getItem('auth-token')
-  //   if (token) {
-  //     const { data } = await axios.get('http://localhost:3000/api/auth', {
-  //       headers: {
-  //         Authorization: token
-  //       }
-  //     })
-  //     if (data.status) {
-  //       this.$router.replace({ path: '/admin' })
-  //     }
-  //   }
-  // },
   computed: {
     errorMessage () {
       if (this.error) {
@@ -47,7 +43,7 @@ export default {
   },
   methods: {
     async handleSubmit () {
-      const { status, data } = await axios.post('http://localhost:3000/api/auth', qs.stringify({
+      const { status, data } = await axios.post('/api/auth', qs.stringify({
         email: this.email,
         password: this.password
       }));
@@ -85,47 +81,5 @@ export default {
   display: flex;
   flex-direction: column;
   padding: 30px;
-}
-
-.admin .login-form .error {
-  background-color: transparent;
-  color: #FE6B8B;
-  font-size: 18px;
-  font-weight: 900;
-  margin: 10px;
-}
-
-.admin .login-form .input {
-  background-color: transparent;
-  border: none;
-  border-bottom: 1px solid #FE6B8B;
-  color: #fff;
-  height: 30px;
-  width: 300px;
-
-  margin: 10px;
-  font-size: 18px;
-}
-
-.admin .login-form .input::placeholder {
-  color: #FE6B8B;
-}
-
-.admin .login-form .input:focus {
-  outline: none;
-  border-bottom: 1px solid #FF8E53;
-}
-
-.admin .login-form .gay-btn {
-  background: linear-gradient(45deg, #FE6B8B 30%, #FF8E53 90%);
-  border: none;
-  color: #fff;
-  cursor: pointer;
-  font-size: 18px;
-  font-weight: 900;
-  height: 40px;
-  width: 300px;
-
-  margin: 10px;
 }
 </style>

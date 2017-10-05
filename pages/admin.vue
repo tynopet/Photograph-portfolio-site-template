@@ -5,7 +5,7 @@
 </template>
 
 <script>
-import axios from 'axios'
+import { axios } from '~/hellpers'
 
 export default {
   middleware: 'auth'

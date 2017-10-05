@@ -5,7 +5,7 @@
 </template>
 
 <script>
-import axios from 'axios'
+import { axios } from '~/hellpers'
 import Album from '~/components/Album'
 
 export default {
@@ -16,7 +16,7 @@ export default {
     return { albums: [] }
   },
   async asyncData () {
-    const { data } = await axios.get('http://localhost:3000/api/albums')
+    const { data } = await axios.get('/api/albums')
     return { albums: data };
   }
 }
