@@ -33,7 +33,7 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
 .navigation {
   position: fixed;
   top: 10px;

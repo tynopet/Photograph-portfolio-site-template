@@ -1,5 +1,4 @@
-import axios from './api'
+import * as Api from './api/index'
 import * as cookie from './cookie'
 
-export { cookie }
-export { axios }
+export { Api, cookie }

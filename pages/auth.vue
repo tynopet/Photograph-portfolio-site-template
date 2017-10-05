@@ -10,8 +10,7 @@
 </template>
 
 <script>
-import qs from 'qs'
-import { axios } from '~/hellpers'
+import { Api } from '~/hellpers'
 import SexyButton from '~/components/Button'
 import SexyInput from '~/components/Input'
 import SexyError from '~/components/Error'
@@ -43,23 +42,22 @@ export default {
   },
   methods: {
     async handleSubmit () {
-      const { status, data } = await axios.post('/api/auth', qs.stringify({
-        email: this.email,
-        password: this.password
-      }));
-      if (status === 200) {
-        if (data.error) {
-          this.error = data.error;
-        } else {
-          localStorage.setItem('auth-token', data.token)
-          document.cookie = `auth-token=${data.token}`
-          this.$router.replace({ path: '/admin' })
+      try {
+        const { status, data } = await Api.auth.login(this.email, this.password)
+        if (status === 200) {
+          if (data.error) {
+            this.error = data.error;
+          } else {
+            localStorage.setItem('auth-token', data.token)
+            document.cookie = `auth-token=${data.token}`
+            this.$router.replace({ path: '/admin' })
+          }
         }
-      } else {
-        if (data.error) {
+      } catch (e) {
+        if (e.response.data.error) {
           this.error = data.error;
         } else {
-          this.error = 'Внутренняя ошибка приложения'
+          this.error = 'Внутренняя ошибка сервера. Свяжитесь с разработчиком'
         }
       }
     }

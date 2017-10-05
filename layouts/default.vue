@@ -6,6 +6,7 @@
     </main>
     <my-footer/>
     <portal-target name="modal" />
+    <portal-target name="float-button" />
   </div>
 </template>
 
