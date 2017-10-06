@@ -5,10 +5,13 @@
 </template>
 
 <script>
-import axios from 'axios'
+import { Api } from '~/hellpers'
 import Image from '~/components/Image'
 
 export default {
+  validate ({ params }) {
+    return /^\d+$/.test(params.id)
+  },
   components: {
     'album-image': Image
   },
@@ -16,7 +19,7 @@ export default {
     return { albums: [] }
   },
   async asyncData ({ params }) {
-    const { data } = await axios.get(`http://localhost:3000/api/albums/${params.id}`)
+    const { data } = await Api.Albums.find(params.id)
     return { album: data }
   }
 }

@@ -9,7 +9,7 @@
 </template>
 
 <script>
-import axios from 'axios'
+import { Api } from '~/hellpers'
 
 export default {
   data () {
@@ -23,7 +23,7 @@ export default {
     }
   },
   async asyncData () {
-    const { data } = await axios.get('http://localhost:3000/api/about')
+    const { data } = await Api.About.fetch()
     const {
       backgroundImage: background,
       firstName,

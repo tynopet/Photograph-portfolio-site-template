@@ -1,11 +1,11 @@
 <template>
   <div class="container">
-    <album v-for="album in albums" :key="album.id" :album="album" />
+    <album v-for="album in albums" :key="album.id" :to="`/${album.id}`" :album="album" />
   </div>
 </template>
 
 <script>
-import axios from 'axios'
+import { Api } from '~/hellpers'
 import Album from '~/components/Album'
 
 export default {
@@ -16,8 +16,7 @@ export default {
     return { albums: [] }
   },
   async asyncData () {
-    const { data } = await axios.get('http://localhost:3000/api/albums')
-    console.log(data[0]);
+    const { data } = await Api.Albums.fetch()
     return { albums: data };
   }
 }

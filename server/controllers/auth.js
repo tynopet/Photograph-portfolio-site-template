@@ -7,8 +7,23 @@ import { passport, sign } from '../auth'
 const User = db.User
 const auth = new Router({ prefix: '/auth' })
 
-auth.get('/', async ctx => {
-  ctx.body = JSON.stringify(await User.findAll())
+auth.get('/', async (ctx, next) => {
+  try {
+    await passport.authenticate('jwt', { session: false }, (err, user) => {
+      if (err) {
+        ctx.status = 500
+        ctx.body = JSON.stringify({ error: err })
+      }
+      if (!user) {
+        ctx.body = JSON.stringify({ error: 'Token is not valid' })
+      } else {
+        ctx.body = JSON.stringify({ status: 'OK' })
+      }
+    })(ctx, next)
+  } catch (e) {
+    ctx.status = 500
+    ctx.body = JSON.stringify({ error: e })
+  }
 })
 
 auth.post('/', bodyParser(), async (ctx, next) => {
@@ -16,10 +31,10 @@ auth.post('/', bodyParser(), async (ctx, next) => {
     await passport.authenticate('local', (err, user) => {
       if (err) {
         ctx.status = 500
-        ctx.body = `Error ${err}`
+        ctx.body = JSON.stringify({ error: err })
       }
       if (!user) {
-        ctx.body = 'Login failed'
+        ctx.body = JSON.stringify({ error: 'Login failed' })
       } else {
         const payload = {
           id: user.id,
@@ -31,7 +46,7 @@ auth.post('/', bodyParser(), async (ctx, next) => {
     })(ctx, next)
   } catch (e) {
     ctx.status = 500
-    ctx.body = `Error ${e}`
+    ctx.body = JSON.stringify({ error: e })
   }
 })
 

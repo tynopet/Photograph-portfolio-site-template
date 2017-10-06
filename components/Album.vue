@@ -1,8 +1,9 @@
 <template>
-  <section>
-    <nuxt-link :to="`/${album.id}`">
-      <album-image :src="album.Cover.path" :alt="album.name" />
+  <section class="album">
+    <nuxt-link :to="to">
+      <album-image :src="src" :alt="album.name" />
     </nuxt-link>
+    <slot></slot>
   </section>
 </template>
 
@@ -15,21 +16,26 @@ export default {
   },
   props: {
     album: {
-      type: Object
+      type: Object,
+      required: true
+    },
+    to: {
+      type: String,
+      required: true
+    }
+  },
+  computed: {
+    src () {
+      return this.album.Cover ? this.album.Cover.path : ''
     }
   }
 }
 </script>
 
-<style>
-.image-container {
-  width: 100%;
-}
-
-.image-container .image {
-  width: 100%;
-  height: auto;
-  object-fit: contain;
+<style scoped>
+.album {
+  position: relative;
+  min-height: 100px;
 }
 </style>
 

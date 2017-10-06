@@ -1,6 +1,7 @@
 <template>
   <span class="image-container">
     <img class="image" :src="src" :alt="alt">
+    <slot></slot>
   </span>
 </template>
 
@@ -19,8 +20,9 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
 .image-container {
+  position: relative;
   width: 100%;
 }
 

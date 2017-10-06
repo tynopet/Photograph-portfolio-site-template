@@ -14,11 +14,7 @@
   version "1.0.4"
   resolved "https://registry.yarnpkg.com/@types/geojson/-/geojson-1.0.4.tgz#f6e011bf3f7eea616cce79b6f1a0722010822f3a"
 
-"@types/node@*":
-  version "8.0.31"
-  resolved "https://registry.yarnpkg.com/@types/node/-/node-8.0.31.tgz#d9af61093cf4bfc9f066ca34de0175012cfb0ce9"
-
-"@types/node@^6.0.46":
+"@types/node@*", "@types/node@^6.0.46":
   version "6.0.88"
   resolved "https://registry.yarnpkg.com/@types/node/-/node-6.0.88.tgz#f618f11a944f6a18d92b5c472028728a3e3d4b66"
 
@@ -4563,6 +4559,10 @@ pn@^1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/pn/-/pn-1.0.0.tgz#1cf5a30b0d806cd18f88fc41a6b5d4ad615b3ba9"
 
+portal-vue@^1.1.1:
+  version "1.1.1"
+  resolved "https://registry.yarnpkg.com/portal-vue/-/portal-vue-1.1.1.tgz#8b13e18994c120e21dc5c85f4f5f25ce73dca41d"
+
 postcss-apply@^0.8.0:
   version "0.8.0"
   resolved "https://registry.yarnpkg.com/postcss-apply/-/postcss-apply-0.8.0.tgz#14e544bbb5cb6f1c1e048857965d79ae066b1343"
@@ -5177,7 +5177,7 @@ q@^1.1.2:
   version "1.5.0"
   resolved "https://registry.yarnpkg.com/q/-/q-1.5.0.tgz#dd01bac9d06d30e6f219aecb8253ee9ebdc308f1"
 
-qs@6.5.1, qs@^6.4.0, qs@~6.5.1:
+qs@6.5.1, qs@^6.4.0, qs@^6.5.1, qs@~6.5.1:
   version "6.5.1"
   resolved "https://registry.yarnpkg.com/qs/-/qs-6.5.1.tgz#349cdf6eef89ec45c12d7d5eb3fc0c870343a6d8"
 

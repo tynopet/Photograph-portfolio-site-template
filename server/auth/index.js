@@ -22,13 +22,11 @@ passport.use(
     (email, password, done) => {
       User.findOne({ where: { email } })
         .then(user => {
-          console.log(user.checkPassword(password))
           if (!user || !user.checkPassword(password)) {
             return done(null, false, {
               message: 'User not found or incorrect password'
             })
           }
-          console.log(user.checkPassword(password))
           return done(null, user)
         })
         .catch(e => done(e))
