@@ -1,12 +1,17 @@
 <template>
-  <button class="sexy-button" @click="$emit('click')" :style="{ left: left, right: right }">
+  <button class="sexy-button" @click="$emit('click')" :style="{ left, right, position }">
     <slot></slot>
   </button>
 </template>
 
 <script>
 export default {
-  props: ['left', 'right']
+  props: ['left', 'right', 'fixed'],
+  computed: {
+    position () {
+      return this.fixed ? 'fixed' : ''
+    }
+  }
 }
 </script>
 

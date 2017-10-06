@@ -11,7 +11,8 @@ albums.get('/', async ctx => {
   try {
     const albums = await Album.findAll({
       attributes: ['id', 'name'],
-      include: [{ model: Image, as: 'Cover', attributes: ['path'] }]
+      include: [{ model: Image, as: 'Cover', attributes: ['path'] }],
+      order: [['id']]
     })
     ctx.body = JSON.stringify(albums)
   } catch (e) {

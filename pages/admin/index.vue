@@ -15,7 +15,7 @@
       </modal>
     </portal>
     <portal to="float-button">
-      <sexy-float-button @click="handleCreateAlbum" left="15px" right="">➕</sexy-float-button>
+      <sexy-float-button @click="handleCreateAlbum" left="15px" right="" :fixed="true">➕</sexy-float-button>
     </portal>
   </div>
 </template>
@@ -69,6 +69,7 @@ export default {
       this.showModal = false
       this.album = {}
       this.albumParams = {}
+      this.error = null
     },
     handleCreateAlbum () {
       this.album = {
@@ -111,7 +112,7 @@ export default {
           this.$route.replace('/auth')
         } else {
           if (e.response.data.error) {
-            this.error = data.error
+            this.error = e.response.data.error
           } else {
             this.error = 'Внутренняя ошибка сервера. Свяжитесь с разработчиком'
           }

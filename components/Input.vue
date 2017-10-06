@@ -1,5 +1,5 @@
 <template>
-  <input class="sexy-input" :type="type" :placeholder="placeholder" :value="value" @input="$emit('input', $event.target.value)">
+  <input class="sexy-input" autocomplete="off" :type="type" :placeholder="placeholder" :value="value" @input="$emit('input', $event.target.value)">
 </template>
 
 <script>
