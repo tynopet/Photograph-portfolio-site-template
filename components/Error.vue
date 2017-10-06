@@ -15,6 +15,8 @@
   font-size: 18px;
   font-weight: 900;
   margin: 10px;
+  max-width: 70vw;
+  overflow: auto;
 }
 </style>
 

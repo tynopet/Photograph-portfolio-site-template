@@ -16,7 +16,7 @@ albums.get('/', async ctx => {
     })
     ctx.body = JSON.stringify(albums)
   } catch (e) {
-    ctx.body = `Error: ${e}`
+    ctx.body = JSON.stringify({ error: e })
   }
 })
 

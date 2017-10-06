@@ -15,6 +15,7 @@ about.get('/', async ctx => {
   try {
     const about = await About.findAll({
       attributes: [
+        'id',
         'backgroundImage',
         'firstName',
         'lastName',
@@ -25,14 +26,15 @@ about.get('/', async ctx => {
     })
     ctx.body = JSON.stringify(about)
   } catch (e) {
-    ctx.body = `Error: ${e}`
+    ctx.body = JSON.stringify({ error: e })
   }
 })
 
 about.post('/', passport.authenticate('jwt', { session: false }), async ctx => {
   try {
     const { files, fields } = await asyncBusboy(ctx.req)
-    const background = files.length ? await saveFile(files[0]) : null
+    const background =
+      files.length && files[0].filename.length ? await saveFile(files[0]) : null
     const about = await About.create({
       email: fields.email || null,
       firstName: fields.first_name || null,
@@ -44,7 +46,7 @@ about.post('/', passport.authenticate('jwt', { session: false }), async ctx => {
     ctx.body = JSON.stringify(about)
   } catch (e) {
     ctx.status = 500
-    ctx.body = `Error: ${e}`
+    ctx.body = JSON.stringify({ error: e })
   }
 })
 
@@ -56,19 +58,37 @@ about.put(
       const id = ctx.params.id
       const { files, fields } = await asyncBusboy(ctx.req)
       const about = await About.findById(id)
-      const background = files.length ? await saveFile(files[0]) : null
-      const savedAbout = await About.create({
-        email: fields.email || about.email,
-        firstName: fields.firstName || about.firstName,
-        lastName: fields.lastName || about.lastName,
-        title: fields.title || about.title,
-        text: fields.text ? DOMPurify.sanitize(fields.text) : about.text,
-        backgroundImage: background || about.backgroundImage
+      const background =
+        files.length && files[0].filename.length
+          ? await saveFile(files[0])
+          : null
+      await About.update(
+        {
+          email: fields.email || about.email,
+          firstName: fields.first_name || about.firstName,
+          lastName: fields.last_name || about.lastName,
+          title: fields.title || about.title,
+          text: fields.text ? DOMPurify.sanitize(fields.text) : about.text,
+          backgroundImage: background || about.backgroundImage
+        },
+        { where: { id } }
+      )
+      const savedAbout = await About.findOne({
+        where: { id },
+        attributes: [
+          'id',
+          'backgroundImage',
+          'firstName',
+          'lastName',
+          'email',
+          'title',
+          'text'
+        ]
       })
       ctx.body = JSON.stringify(savedAbout)
     } catch (e) {
       ctx.status = 500
-      ctx.body = `Error: ${e}`
+      ctx.body = JSON.stringify({ error: e })
     }
   }
 )
@@ -86,7 +106,7 @@ about.delete(
       ctx.body = JSON.stringify(about)
     } catch (e) {
       ctx.status = 500
-      ctx.body = `Error: ${e}`
+      ctx.body = JSON.stringify({ error: e })
     }
   }
 )

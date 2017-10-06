@@ -9,7 +9,9 @@ import User from './User'
 const sequelizeConnection = new Sequelize('test', 'test', 'test', {
   host: '172.17.0.2',
   dialect: 'mysql',
-
+  dialectOptions: {
+    charset: 'utf8mb4'
+  },
   pool: {
     max: 5,
     min: 0,
