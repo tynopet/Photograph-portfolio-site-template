@@ -1,12 +1,14 @@
 <template>
   <nav class="navigation">
-    <span @click="handleClick">ICON</span>
+    <span class="menu-icon" @click="handleClick">
+      <i class="fa fa-bars fa-lg"></i>
+    </span>
     <ul v-show="isOpen" class="submenu">
       <li>
-        <nuxt-link to="/">Главная</nuxt-link>
+        <nuxt-link :to="link('/')">Главная</nuxt-link>
       </li>
       <li>
-        <nuxt-link to="/about">Контакты</nuxt-link>
+        <nuxt-link :to="link('/about')">Контакты</nuxt-link>
       </li>
     </ul>
   </nav>
@@ -14,6 +16,7 @@
 
 <script>
 export default {
+  props: ['type'],
   data () {
     return {
       isOpen: false
@@ -28,6 +31,11 @@ export default {
   methods: {
     handleClick () {
       this.isOpen = !this.isOpen
+    },
+    link (path) {
+      return this.type === 'admin'
+        ? `/admin${path}`
+        : path
     }
   }
 }
@@ -43,5 +51,10 @@ export default {
   flex-direction: column;
   align-items: flex-end;
   z-index: 5;
+}
+
+.navigation .menu-icon {
+  color: #fff;
+  cursor: pointer;
 }
 </style>

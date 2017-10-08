@@ -1,9 +1,11 @@
 <template>
   <div class="layout">
-    <my-menu/>
+    <my-menu type="admin" />
     <main class="page">
       <nuxt/>
     </main>
+    <portal-target name="modal" />
+    <portal-target name="float-button" />
   </div>
 </template>
 
@@ -14,7 +16,7 @@ import MyFooter from '../components/Footer.vue'
 export default {
   components: {
     MyFooter,
-    MyMenu
+    MyMenu,
   }
 }
 </script>
@@ -31,6 +33,5 @@ export default {
   flex-direction: column;
   min-height: 100vh;
   background-color: #000;
-  font-family: 'Roboto', sans-serif
 }
 </style>

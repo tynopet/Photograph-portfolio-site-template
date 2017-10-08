@@ -1,15 +1,21 @@
 <template>
   <section>
     <album-image v-for="image in album.Images" :key="image.id" :src="image.path" :alt="image.alt">
-      <sexy-float-button @click="handleCoverChange(image)" right="150px" left="">🔨</sexy-float-button>
-      <sexy-float-button @click="handleEditImage(image)" right="75px" left="">🖊</sexy-float-button>
-      <sexy-float-button @click="handleRemoveImage(image)">🗑</sexy-float-button>
+      <sexy-float-button @click="handleCoverChange(image)" right="150px" left="">
+        <i class="fa fa-paint-brush"></i>
+      </sexy-float-button>
+      <sexy-float-button @click="handleEditImage(image)" right="75px" left="">
+        <i class="fa fa-pencil"></i>
+      </sexy-float-button>
+      <sexy-float-button @click="handleRemoveImage(image)">
+        <i class="fa fa-trash"></i>
+      </sexy-float-button>
     </album-image>
     <portal to="modal">
       <modal v-show="showModal" @close="handleCloseModal">
         <span slot="header">{{ imageParams.header }}</span>
         <form slot="body" @submit.prevent="handleSubmit" class="image-form">
-          <sexy-input v-model="image.alt" name="alt" type="text" placeholder="Описание картинки" />
+          <sexy-input autofocus v-model="image.alt" name="alt" type="text" placeholder="Описание картинки" />
           <sexy-file-input name="image" type="file" />
           <sexy-error v-show="error">{{ error }}</sexy-error>
           <sexy-button>{{ imageParams.text }}</sexy-button>
@@ -17,7 +23,9 @@
       </modal>
     </portal>
     <portal to="float-button">
-      <sexy-float-button @click="handleCreateImage" left="15px" right="" :fixed="true">➕</sexy-float-button>
+      <sexy-float-button @click="handleCreateImage" left="15px" right="" :fixed="true">
+        <i class="fa fa-plus"></i>
+      </sexy-float-button>
     </portal>
   </section>
 </template>
@@ -33,6 +41,10 @@ import SexyFloatButton from '~/components/FloatButton'
 import SexyInput from '~/components/Input'
 
 export default {
+  layout: 'admin',
+  head: {
+    title: 'Редактирование альбома'
+  },
   validate ({ params }) {
     return /^\d+$/.test(params.id)
   },
@@ -118,7 +130,7 @@ export default {
         } else if (this.imageParams.action === 'create') {
           image.append('album_id', this.album.id)
           const { data } = await Api.Images.create(image)
-          this.album.Images = { ...this.album.Images, data }
+          this.album.Images = [...this.album.Images, data]
         }
         this.showModal = false;
         this.error = null

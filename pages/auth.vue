@@ -1,7 +1,7 @@
 <template>
   <section class="admin">
     <form class="login-form" @submit.prevent="handleSubmit">
-      <sexy-input type="email" placeholder="Email" v-model="email" />
+      <sexy-input autofocus type="email" placeholder="Email" v-model="email" />
       <sexy-input type="password" placeholder="Пароль" v-model="password" />
       <sexy-error v-show="error">{{ errorMessage }}</sexy-error>
       <sexy-button>Log In</sexy-button>
@@ -43,7 +43,7 @@ export default {
   methods: {
     async handleSubmit () {
       try {
-        const { status, data } = await Api.auth.login(this.email, this.password)
+        const { status, data } = await Api.Auth.login(this.email, this.password)
         if (status === 200) {
           if (data.error) {
             this.error = data.error;

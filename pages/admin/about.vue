@@ -3,7 +3,7 @@
     <div class="background-image" :style="{ 'background-image': `url(${background})` }" />
     <div class="content">
       <form class="about-form" @submit.prevent="handleSubmit">
-        <sexy-input placeholder="Email" type="email" name="email" v-model="email"></sexy-input>
+        <sexy-input autofocus placeholder="Email" type="email" name="email" v-model="email"></sexy-input>
         <sexy-input placeholder="Имя" type="text" name="first_name" v-model="firstName"></sexy-input>
         <sexy-input placeholder="Фамилия" type="text" name="last_name" v-model="lastName"></sexy-input>
         <sexy-input placeholder="Заголовок страницы" type="text" name="title" v-model="title"></sexy-input>
@@ -25,6 +25,10 @@ import SexyFileInput from '~/components/FileInput'
 import SexyInput from '~/components/Input'
 
 export default {
+  layout: 'admin',
+  head: {
+    title: 'Редактирование инфы о себе'
+  },
   middleware: 'auth',
   components: {
     SexyButton,
@@ -46,23 +50,25 @@ export default {
   },
   async asyncData () {
     const { data } = await Api.About.fetch()
-    const {
+    if (data.length) {
+      const {
       id,
-      backgroundImage: background,
-      firstName,
-      lastName,
-      email,
-      title,
-      text
+        backgroundImage: background,
+        firstName,
+        lastName,
+        email,
+        title,
+        text
     } = data[0];
-    return {
-      id,
-      background,
-      firstName,
-      lastName,
-      email,
-      title,
-      text
+      return {
+        id,
+        background,
+        firstName,
+        lastName,
+        email,
+        title,
+        text
+      }
     }
   },
   methods: {

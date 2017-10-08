@@ -1,21 +1,27 @@
 <template>
   <div class="container">
     <album v-for="album in albums" :key="album.id" :to="`/admin/${album.id}`" :album="album">
-      <sexy-float-button @click="handleEditAlbum(album)" right="75px" left="">🖊</sexy-float-button>
-      <sexy-float-button @click="handleRemoveAlbum(album)">🗑</sexy-float-button>
+      <sexy-float-button @click="handleEditAlbum(album)" right="75px" left="">
+        <i class="fa fa-pencil"></i>
+      </sexy-float-button>
+      <sexy-float-button @click="handleRemoveAlbum(album)">
+        <i class="fa fa-trash"></i>
+      </sexy-float-button>
     </album>
     <portal to="modal">
       <modal v-show="showModal" @close="handleCloseModal">
         <span slot="header">{{ albumParams.header }}</span>
         <form slot="body" @submit.prevent="handleSubmit" class="admin-form">
-          <sexy-input v-model="album.name" type="text" placeholder="Название альбома" />
+          <sexy-input autofocus v-model="album.name" type="text" placeholder="Название альбома" />
           <sexy-error v-show="error">{{ error }}</sexy-error>
           <sexy-button>{{ albumParams.text }}</sexy-button>
         </form>
       </modal>
     </portal>
     <portal to="float-button">
-      <sexy-float-button @click="handleCreateAlbum" left="15px" right="" :fixed="true">➕</sexy-float-button>
+      <sexy-float-button @click="handleCreateAlbum" left="15px" right="" :fixed="true">
+        <i class="fa fa-plus"></i>
+      </sexy-float-button>
     </portal>
   </div>
 </template>
@@ -30,6 +36,10 @@ import SexyFloatButton from '~/components/FloatButton'
 import SexyInput from '~/components/Input'
 
 export default {
+  layout: 'admin',
+  head: {
+    title: 'Редактирование альбомов'
+  },
   middleware: 'auth',
   components: {
     Album,
@@ -101,7 +111,7 @@ export default {
           const { name } = this.album
           album.append('name', name)
           const { data } = await Albums.create(album)
-          this.albums = { ...this.albums, data }
+          this.albums = [...this.albums, data]
         }
         this.showModal = false;
         this.error = null

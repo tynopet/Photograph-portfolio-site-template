@@ -1,5 +1,6 @@
 <template>
   <section class="about">
+    <my-title :firstName="firstName" :lastName="lastName" />
     <div class="background-image" :style="{ 'background-image': `url(${background})` }" />
     <div class="content">
       <h1>{{ title }}</h1>
@@ -10,8 +11,17 @@
 
 <script>
 import { Api } from '~/hellpers'
+import MyTitle from '~/components/Title'
 
 export default {
+  components: {
+    MyTitle
+  },
+  head () {
+    return {
+      title: this.title
+    }
+  },
   data () {
     return {
       background: '',
@@ -66,10 +76,11 @@ export default {
 }
 
 .about .content {
+  color: #fff;
   flex: 1 1 auto;
+  margin-top: 10vh;
   position: relative;
   z-index: 2;
-  margin-top: 10vh;
   display: flex;
   flex-direction: column;
   align-items: center;
